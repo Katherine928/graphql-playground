@@ -9,9 +9,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Customer {
 
-    private Integer id;
-    private String name;
-    private Integer age;
-    private String city;
+        private Integer id;
+        private String name;
+        private Integer age;
+        private String city;
+
+
+
 
 }
