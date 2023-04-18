@@ -1,5 +1,6 @@
 package net.katherine.graphqlplayground.sec01.lec02;
 
+import net.katherine.graphqlplayground.sec01.lec02.dto.AgeRangeFilter;
 import net.katherine.graphqlplayground.sec01.lec02.dto.Customer;
 import net.katherine.graphqlplayground.sec01.lec02.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,11 @@ public class CustomerController {
     @QueryMapping
     public Flux<Customer> customersNameContains(@Argument String name) {
         return customerService.nameContains(name);
+    }
+
+    @QueryMapping
+    public Flux<Customer> customersByAgeRange(@Argument AgeRangeFilter filter) {
+        return customerService.withinAge(filter);
     }
 
 }
