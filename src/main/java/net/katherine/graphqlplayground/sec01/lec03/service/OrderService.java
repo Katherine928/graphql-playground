@@ -1,6 +1,7 @@
 package net.katherine.graphqlplayground.sec01.lec03.service;
 
 import net.katherine.graphqlplayground.sec01.lec03.dto.CustomerOrder;
+import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
 import java.util.Collections;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+@Service
 public class OrderService {
 
     private final Map<String, List<CustomerOrder>> map = Map.of(

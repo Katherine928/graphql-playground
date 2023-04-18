@@ -1,9 +1,12 @@
 package net.katherine.graphqlplayground.sec01.lec03;
 
 import net.katherine.graphqlplayground.sec01.lec03.dto.Customer;
+import net.katherine.graphqlplayground.sec01.lec03.dto.CustomerOrder;
 import net.katherine.graphqlplayground.sec01.lec03.service.CustomerService;
+import net.katherine.graphqlplayground.sec01.lec03.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 
@@ -13,10 +16,23 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @QueryMapping
+    @Autowired
+    private OrderService orderService;
+
+
+    @SchemaMapping(
+            typeName = "Query"
+    )
     public Flux<Customer> customers() {
         return this.customerService.allCustomers();
     }
 
+
+    @SchemaMapping(
+            typeName = "Customer"
+    )
+    public Flux<CustomerOrder> orders(Customer customer) {
+        return orderService.ordersByCustomerName(customer.getName());
+    }
 
 }
