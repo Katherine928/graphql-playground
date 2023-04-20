@@ -3,6 +3,7 @@ package net.katherine.graphqlplayground.sec01.lec04.service;
 import net.katherine.graphqlplayground.sec01.lec04.dto.CustomerOrder;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,9 +28,19 @@ public class OrderService {
         return Flux.fromIterable(map.getOrDefault(name, Collections.emptyList()));
     }
 
+//    public Flux<List<CustomerOrder>> ordersByCustomerNames(List<String> names) {
+//        return Flux.fromIterable(names)
+//                .map(n -> map.getOrDefault(n, Collections.emptyList()));
+//    }
+
     public Flux<List<CustomerOrder>> ordersByCustomerNames(List<String> names) {
         return Flux.fromIterable(names)
-                .map(n -> map.getOrDefault(n, Collections.emptyList()));
+                .flatMap(n -> fetchOrders(n).defaultIfEmpty(Collections.emptyList()));
+    }
+
+    // Some source
+    public Mono<List<CustomerOrder>> fetchOrders(String name) {
+        return Mono.justOrEmpty(map.get(name));
     }
 
 }
