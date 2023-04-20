@@ -3,7 +3,7 @@ package net.katherine.graphqlplayground;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "net.katherine.graphqlplayground.sec01.lec03")
+@SpringBootApplication(scanBasePackages = "net.katherine.graphqlplayground.sec01.lec04")
 public class GraphqlPlaygroundApplication {
 
 	public static void main(String[] args) {
