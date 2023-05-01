@@ -2,6 +2,7 @@ package net.katherine.graphqlplayground.lec15.controller;
 
 import net.katherine.graphqlplayground.lec15.dto.CustomerDto;
 import net.katherine.graphqlplayground.lec15.dto.DeleteResponseDto;
+import net.katherine.graphqlplayground.lec15.exceptions.ApplicationErrors;
 import net.katherine.graphqlplayground.lec15.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.graphql.data.method.annotation.Argument;
@@ -24,13 +25,17 @@ public class CustomerController {
 
     @QueryMapping
     public Mono<CustomerDto> customerById(@Argument Integer id) {
-        throw new RuntimeException("Something is Wrong!");
-        //return customerService.customerById(id);
+        return customerService.customerById(id)
+                .switchIfEmpty(ApplicationErrors.noSuchUser(id));
     }
 
     @MutationMapping
     public Mono<CustomerDto> createCustomer(@Argument CustomerDto customer) {
-        return customerService.createCustomer(customer);
+        return Mono.just(customer)
+                .filter(c -> c.getAge() >= 18)
+                .flatMap(customerService::createCustomer)
+                .switchIfEmpty(ApplicationErrors.mustBe18(customer));
+//        return customerService.createCustomer(customer);
     }
 
     @MutationMapping
