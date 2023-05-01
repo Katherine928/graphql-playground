@@ -1,6 +1,7 @@
 package net.katherine.graphqlplayground.lec15.controller;
 
 import net.katherine.graphqlplayground.lec15.dto.CustomerDto;
+import net.katherine.graphqlplayground.lec15.dto.CustomerNotFound;
 import net.katherine.graphqlplayground.lec15.dto.DeleteResponseDto;
 import net.katherine.graphqlplayground.lec15.exceptions.ApplicationErrors;
 import net.katherine.graphqlplayground.lec15.service.CustomerService;
@@ -24,9 +25,11 @@ public class CustomerController {
     }
 
     @QueryMapping
-    public Mono<CustomerDto> customerById(@Argument Integer id) {
+    public Mono<Object> customerById(@Argument Integer id) {
         return customerService.customerById(id)
-                .switchIfEmpty(ApplicationErrors.noSuchUser(id));
+                .cast(Object.class)
+//                .switchIfEmpty(ApplicationErrors.noSuchUser(id));
+                .switchIfEmpty(Mono.just(CustomerNotFound.create(id)));
     }
 
     @MutationMapping
