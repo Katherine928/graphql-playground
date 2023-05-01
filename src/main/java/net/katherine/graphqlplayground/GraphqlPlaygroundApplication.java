@@ -2,8 +2,10 @@ package net.katherine.graphqlplayground;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.r2dbc.repository.config.EnableR2dbcRepositories;
 
-@SpringBootApplication(scanBasePackages = "net.katherine.graphqlplayground.lec13")
+@SpringBootApplication(scanBasePackages = "net.katherine.graphqlplayground.${lec}")
+@EnableR2dbcRepositories(basePackages = "net.katherine.graphqlplayground.${lec}")
 public class GraphqlPlaygroundApplication {
 
 	public static void main(String[] args) {
