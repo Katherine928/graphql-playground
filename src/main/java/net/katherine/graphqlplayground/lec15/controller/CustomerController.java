@@ -1,5 +1,6 @@
 package net.katherine.graphqlplayground.lec15.controller;
 
+import graphql.schema.DataFetchingEnvironment;
 import net.katherine.graphqlplayground.lec15.dto.CustomerDto;
 import net.katherine.graphqlplayground.lec15.dto.CustomerNotFound;
 import net.katherine.graphqlplayground.lec15.dto.DeleteResponseDto;
@@ -20,7 +21,9 @@ public class CustomerController {
     private CustomerService customerService;
 
     @QueryMapping
-    public Flux<CustomerDto> customers() {
+    public Flux<CustomerDto> customers(DataFetchingEnvironment environment) {
+        var callerId = environment.getGraphQlContext().get("caller-id");
+        System.out.println("CALLER ID: " + callerId);
         return customerService.allCustomers();
     }
 
