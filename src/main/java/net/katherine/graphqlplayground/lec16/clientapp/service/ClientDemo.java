@@ -18,7 +18,9 @@ public class ClientDemo implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        rawQueryDemo().subscribe();
+        rawQueryDemo()
+                .then(getCustomerById())
+                .subscribe();
 
     }
 
@@ -39,6 +41,15 @@ public class ClientDemo implements CommandLineRunner {
         return Mono.delay(Duration.ofSeconds(1))
                 .doFirst(() -> System.out.println("Raw Query"))
                 .then(mono)
+                .doOnNext(System.out::println)
+                .then();
+    }
+
+
+    public Mono<Void> getCustomerById() {
+        return Mono.delay(Duration.ofSeconds(1))
+                .doFirst(() -> System.out.println("getCustomerById"))
+                .then(customerClient.getCustomerById(1))
                 .doOnNext(System.out::println)
                 .then();
     }
