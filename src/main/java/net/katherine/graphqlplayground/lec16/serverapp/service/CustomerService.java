@@ -1,7 +1,6 @@
 package net.katherine.graphqlplayground.lec16.serverapp.service;
 
 import net.katherine.graphqlplayground.lec16.dto.*;
-import net.katherine.graphqlplayground.lec16.serverapp.dto.*;
 import net.katherine.graphqlplayground.lec16.serverapp.repository.CustomerRepository;
 import net.katherine.graphqlplayground.lec16.serverapp.util.EntityDtoUtil;
 import org.springframework.beans.factory.annotation.Autowired;
