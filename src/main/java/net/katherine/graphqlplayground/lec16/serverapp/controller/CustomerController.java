@@ -1,6 +1,7 @@
 package net.katherine.graphqlplayground.lec16.serverapp.controller;
 
 import net.katherine.graphqlplayground.lec16.dto.CustomerDto;
+import net.katherine.graphqlplayground.lec16.dto.CustomerNotFound;
 import net.katherine.graphqlplayground.lec16.dto.DeleteResponseDto;
 import net.katherine.graphqlplayground.lec16.serverapp.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,10 @@ public class CustomerController {
     }
 
     @QueryMapping
-    public Mono<CustomerDto> customerById(@Argument Integer id) {
-        return customerService.customerById(id);
+    public Mono<Object> customerById(@Argument Integer id) {
+        return customerService.customerById(id)
+                .cast(Object.class)
+                .defaultIfEmpty(CustomerNotFound.create(id));
     }
 
     @MutationMapping
